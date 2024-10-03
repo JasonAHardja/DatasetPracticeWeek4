@@ -1,0 +1,76 @@
+import pandas as pd
+import numpy as np
+
+df = pd.DataFrame({
+    "personID":[1010,2020,3030,4040,5050],
+    "first": ["John", "Mary","Robbie","Brandon","Charlie"],
+    "last": ["Doe", "Bo","Wu","Lee","Petterson"],
+    "height": [5.5, 6.0, 7.0, 8.0,5.0],
+    "weight": [130, 150, 160, 125, 120],
+})
+
+df.info()
+
+np.random.seed(50)
+col_name=['height','weight']
+
+mask = np.random.choice([True, False], size=df[col_name].shape)
+mask[mask.all(1),-1] = 0
+print(mask)
+
+df[col_name]=df[col_name].mask(mask)
+
+df2 = pd.DataFrame({
+    "personID":[1010,2020,3030,4040,5050],
+    "salary": [5000, 6500, 6000, 3000,2000],
+    "term": ["contract", "permanent", "contract", "contract", "permanent"],
+})
+
+
+np.random.seed(10)
+col_name=['salary','term']
+mask = np.random.choice([True, False], size=df2[col_name].shape)
+mask[mask.all(1),-1] = 0
+print(mask)
+df2[col_name]=df2[col_name].mask(mask)
+
+df2.isnull().sum()
+df2['salary'].fillna(df2['salary'].mean(), inplace=True)
+df2.head()
+
+df_merge=df.merge(df2, left_on='personID', right_on='personID')
+df_merge
+
+df_merge.info()
+
+df.melt()
+
+-------------------------------------------------------------------------------
+Your task:
+Inspect a dataframe with df.head(), df.tail(), df.info(), df.describe().
+
+Show how many missing values in your data, each column.
+Manipulate how a dataframe displays in Jupyter by modifying Pandas configuration options such as pd.set_option("display.max_rows", n).
+
+Rename columns of a dataframe using the df.rename() function or by accessing the df.columns attribute.
+
+Modify the index name and index values of a dataframe using .set_index(), .reset_index() , df.index.name, .index.
+
+Use df.melt() and df.pivot() to reshape dataframes, specifically to make tidy dataframes.
+Combine dataframes using df.merge() and pd.concat() and know when to use these different methods.
+
+Apply functions to a dataframe df.apply() and df.applymap()
+
+Find the data which satisfy specific condition using df.query()
+
+Perform grouping and aggregating operations using df.groupby() and df.agg().
+
+Perform aggregating methods on grouped or ungrouped objects such as finding the minimum, maximum and sum of values in a dataframe using df.agg().
+
+Remove or fill missing values in a dataframe with df.dropna() and df.fillna() please practice using different method of filling missing value.
+
+Practice imputing missing values using the SimpleImputer Class in sklearn
+
+For extra miles:
+clean your text data using regex function
+clean the text and nested json in
